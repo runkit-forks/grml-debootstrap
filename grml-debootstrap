@@ -259,7 +259,7 @@ cleanup() {
     einfo "Removing ${STAGES}" ; rmdir "$STAGES" ; eend $?
   fi
 
-  if [ -n "$ARM_EFI_TARGET" ]; then
+  if [ -n "$ARM_EFI_TARGET" ] && [ "${GRUB_INSTALL}" != "yes" ]; then
     umount "${MNTPOINT}/boot/efi" >/dev/null 2>&1
   fi
 
@@ -1680,7 +1680,7 @@ umount_target() {
      return 0
   fi
 
-  if [ -n "$ARM_EFI_TARGET" ]; then
+  if [ -n "$ARM_EFI_TARGET" ] && [ "${GRUB_INSTALL}" != "yes" ]; then
     umount "${MNTPOINT}/boot/efi"
   fi
 
