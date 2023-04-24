@@ -1531,6 +1531,11 @@ prepare_vm() {
     bailout 1
   fi
 
+  # If running inside Docker, make our nodes manually, because udev will not be working.
+  if [ -f /.dockerenv ]; then
+    dmsetup --noudevsync mknodes
+  fi
+
   # if we're building for arm64, we operate on the first line of $DEVINFO which is the EFI partition
   if [ "$ARCH" = 'arm64' ]; then
     LOOP_PART="${DEVINFO##add map }" # 'loop0p1 (254:5): 0 20477 linear 7:0 3'
